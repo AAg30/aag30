@@ -91,9 +91,9 @@
             <div class="projects-grid">
                 <div class="project-card">
                     <h3>🌍 AI Smart Pollution Tracker</h3>
-                    <p>Real-time air quality analysis application built with Python and Tkinter. Analyzes AQI values, temperature, and humidity to provide health recommendations and safety tips based on air quality status.</p>
-                    <a href="https://github.com/AAg30/aag30" class="project-link">View on GitHub →</a>
-                    <span class="status">Completed</span>
+                    <p>Real-time air quality analysis application. Analyzes AQI values, temperature, and humidity to provide health recommendations and safety tips based on air quality status.</p>
+                    <button class="project-link" onclick="openPollutionTracker()">Try Now →</button>
+                    <span class="status">Interactive</span>
                 </div>
                 <div class="project-card">
                     <h3>Personal Portfolio</h3>
@@ -137,6 +137,46 @@
             </div>
         </div>
     </section>
+
+    <!-- Pollution Tracker Modal -->
+    <div id="pollutionTrackerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePollutionTracker()">&times;</span>
+            <div class="tracker-container">
+                <h2>🌍 AI Smart Pollution Tracker</h2>
+                <p style="color: #b8c5d6; margin-bottom: 1.5rem;">Real-time air quality analysis</p>
+                
+                <div class="tracker-form">
+                    <div class="input-group">
+                        <label for="aqi">AQI Value:</label>
+                        <input type="number" id="aqi" placeholder="Enter AQI" min="0" max="500">
+                        <span class="unit">index</span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="temp">Temperature:</label>
+                        <input type="number" id="temp" placeholder="Enter Temperature" min="-50" max="60">
+                        <span class="unit">°C</span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="humidity">Humidity:</label>
+                        <input type="number" id="humidity" placeholder="Enter Humidity" min="0" max="100">
+                        <span class="unit">%</span>
+                    </div>
+                </div>
+                
+                <div class="tracker-buttons">
+                    <button class="btn-analyze" onclick="analyzeAirQuality()">Analyze</button>
+                    <button class="btn-clear" onclick="clearTrackerForm()">Clear</button>
+                </div>
+                
+                <div id="trackerResult" class="tracker-result">
+                    <p style="color: #b8c5d6;">Enter values and click Analyze</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
