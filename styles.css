@@ -482,6 +482,49 @@ footer {
     color: var(--muted-text);
 }
 
+/* Inline popover/modal styling for pollution tracker */
+#pollutionTrackerModal {
+  display: none;
+  position: absolute;
+  max-width: 380px;
+  width: calc(100% - 32px);
+  background: #0b1220;
+  color: #e6edf3;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 10px 30px rgba(2,8,23,0.6);
+  border: 1px solid rgba(255,255,255,0.03);
+  z-index: 9999;
+}
+
+#pollutionTrackerModal .modal-content {
+  position: relative;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+}
+
+/* Keep the close button visible and clickable */
+#pollutionTrackerModal .close {
+  position: absolute;
+  right: 8px;
+  top: 6px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #b8c5d6;
+}
+
+/* Responsive: full-width on very small screens */
+@media (max-width: 420px) {
+  #pollutionTrackerModal {
+    left: 8px !important;
+    right: 8px !important;
+    width: calc(100% - 16px);
+    max-width: none;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero-content h1 {
