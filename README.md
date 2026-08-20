@@ -2,6 +2,10 @@
 
 A modern, responsive personal portfolio website showcasing my AI projects and professional information.
 
+## 👋 About Me
+
+I'm a developer focused on AI projects who is also deeply interested in politics, business, and entrepreneurship. I enjoy building practical tools that combine machine learning with real-world needs, and I like exploring how technology, policy, and markets intersect to create new opportunities.
+
 ## 🌟 Features
 
 - **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
