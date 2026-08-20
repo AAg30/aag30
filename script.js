@@ -108,15 +108,55 @@ if (heroTitle) {
 
 // ========== POLLUTION TRACKER FUNCTIONS ==========
 
-function openPollutionTracker() {
+// Open the tracker as an inline popover positioned below the trigger button
+function openPollutionTracker(triggerEl) {
     const modal = document.getElementById('pollutionTrackerModal');
+    if (!modal) return;
+
+    // Prepare modal for positioning
+    modal.style.position = 'absolute';
     modal.style.display = 'block';
-    document.body.style.overflow = 'hidden';
+    modal.style.zIndex = '9999';
+    modal.style.maxWidth = '380px';
+
+    // Temporarily make visible but hidden to measure size
+    modal.style.visibility = 'hidden';
+
+    // Small delay to ensure browser calculates layout when called from inline onclick
+    requestAnimationFrame(() => {
+        const rect = triggerEl.getBoundingClientRect();
+        const modalWidth = modal.offsetWidth || 360;
+        const gap = 8; // px gap between button and popover
+
+        let left = rect.left + window.scrollX;
+        // Ensure it doesn't overflow right edge
+        if (left + modalWidth + 16 > window.innerWidth + window.scrollX) {
+            left = window.innerWidth + window.scrollX - modalWidth - 16;
+        }
+        if (left < 8 + window.scrollX) left = 8 + window.scrollX;
+
+        const top = rect.bottom + window.scrollY + gap;
+
+        modal.style.left = left + 'px';
+        modal.style.top = top + 'px';
+
+        modal.style.visibility = 'visible';
+
+        // For inline popover we don't block body scrolling
+        // but we want to ensure any other modals/popovers are hidden
+        document.body.style.overflow = document.body.style.overflow || '';
+    });
 }
 
 function closePollutionTracker() {
     const modal = document.getElementById('pollutionTrackerModal');
+    if (!modal) return;
     modal.style.display = 'none';
+    modal.style.left = '';
+    modal.style.top = '';
+    modal.style.position = '';
+    modal.style.zIndex = '';
+    modal.style.maxWidth = '';
     document.body.style.overflow = 'auto';
 }
 
@@ -194,11 +234,17 @@ function clearTrackerForm() {
     document.getElementById('trackerResult').innerHTML = '<p style="color: #b8c5d6;">Enter values and click Analyze</p>';
 }
 
-// Close modal when clicking outside of it
-window.onclick = function(event) {
+// Close popover when clicking outside of it
+window.addEventListener('click', function(event) {
     const modal = document.getElementById('pollutionTrackerModal');
-    if (event.target == modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
+    if (!modal) return;
+
+    // If displayed as inline popover, hide when clicking outside the popover and outside any project card
+    if (modal.style.display === 'block') {
+        const clickedInsidePopover = modal.contains(event.target);
+        const clickedInsideTriggerCard = event.target.closest('.project-card');
+        if (!clickedInsidePopover && !clickedInsideTriggerCard) {
+            closePollutionTracker();
+        }
     }
-}
+});
