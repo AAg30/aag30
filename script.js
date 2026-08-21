@@ -248,3 +248,77 @@ window.addEventListener('click', function(event) {
         }
     }
 });
+
+// ========== THEME TOGGLE ==========
+(function() {
+  const themeToggle = document.getElementById('themeToggle');
+  const userPrefKey = 'site-theme'; // 'dark' | 'light'
+
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      document.documentElement.classList.add('light-theme');
+      updateToggleIcon('light');
+    } else {
+      document.documentElement.classList.remove('light-theme');
+      updateToggleIcon('dark');
+    }
+  }
+
+  function updateToggleIcon(mode) {
+    if (!themeToggle) return;
+    const icon = themeToggle.querySelector('i');
+    if (!icon) return;
+    if (mode === 'light') {
+      icon.className = 'fas fa-sun';
+      themeToggle.setAttribute('aria-pressed', 'true');
+    } else {
+      icon.className = 'fas fa-moon';
+      themeToggle.setAttribute('aria-pressed', 'false');
+    }
+  }
+
+  function getSavedTheme() {
+    return localStorage.getItem(userPrefKey);
+  }
+
+  function setSavedTheme(value) {
+    if (value) localStorage.setItem(userPrefKey, value);
+    else localStorage.removeItem(userPrefKey);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const saved = getSavedTheme();
+    if (saved === 'light' || saved === 'dark') {
+      applyTheme(saved);
+    } else {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(prefersDark ? 'dark' : 'light');
+    }
+
+    // react to system changes only if user hasn't set a preference
+    try {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!getSavedTheme()) applyTheme(e.matches ? 'dark' : 'light');
+      });
+    } catch (e) {
+      // older browsers may not support addEventListener on matchMedia
+    }
+
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const currentlyLight = document.documentElement.classList.contains('light-theme');
+        const newTheme = currentlyLight ? 'dark' : 'light';
+        setSavedTheme(newTheme);
+        applyTheme(newTheme);
+      });
+      themeToggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          themeToggle.click();
+        }
+      });
+    } else {
+      // console.warn('themeToggle not found');
+    }
+  });
+})();
