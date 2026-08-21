@@ -13,11 +13,35 @@
     --muted-text: #b8c5d6;
     --card-bg: #1a2a4a;
     --border-color: #2d4a7c;
+    /* page/card helpers used by theme switching */
+    --page-bg-gradient: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    --card-bg-solid: #0b1220;
+    --btn-text-dark: var(--dark-bg);
+}
+
+/* Light theme overrides */
+.light-theme {
+    --primary-color: #1f6feb;
+    --secondary-color: #0ea5e9;
+    --dark-bg: #ffffff;
+    --darker-bg: #f8fafc;
+    --light-text: #0b1220;
+    --muted-text: #334155;
+    --card-bg: #f1f5f9;
+    --border-color: #e6eefc;
+    --page-bg-gradient: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    --card-bg-solid: #ffffff;
+    --btn-text-dark: #ffffff;
+}
+
+/* Smooth theme transition */
+:root, .light-theme {
+    transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+    background: var(--page-bg-gradient);
     color: var(--light-text);
     line-height: 1.6;
     overflow-x: hidden;
@@ -157,8 +181,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%),
-                linear-gradient(to bottom, var(--darker-bg), var(--dark-bg));
+    background: var(--page-bg-gradient);
     padding: 2rem;
     position: relative;
     overflow: hidden;
@@ -216,7 +239,7 @@ body {
     display: inline-block;
     padding: 1rem 2.5rem;
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: var(--dark-bg);
+    color: var(--btn-text-dark);
     text-decoration: none;
     border-radius: 50px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -473,6 +496,17 @@ body {
     box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
 }
 
+/* Tracker modal popover background using variables */
+#pollutionTrackerModal {
+    background: transparent;
+}
+#pollutionTrackerModal .tracker-container {
+    background: linear-gradient(180deg, var(--card-bg-solid), rgba(8,14,26,0.96));
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.04);
+}
+
 /* Footer */
 footer {
     background: rgba(5, 16, 56, 0.98);
@@ -480,49 +514,6 @@ footer {
     padding: 2rem 0;
     text-align: center;
     color: var(--muted-text);
-}
-
-/* Inline popover/modal styling for pollution tracker */
-#pollutionTrackerModal {
-  display: none;
-  position: absolute;
-  max-width: 380px;
-  width: calc(100% - 32px);
-  background: #0b1220;
-  color: #e6edf3;
-  border-radius: 10px;
-  padding: 1rem;
-  box-shadow: 0 10px 30px rgba(2,8,23,0.6);
-  border: 1px solid rgba(255,255,255,0.03);
-  z-index: 9999;
-}
-
-#pollutionTrackerModal .modal-content {
-  position: relative;
-  background: transparent;
-  box-shadow: none;
-  border: none;
-  padding: 0;
-}
-
-/* Keep the close button visible and clickable */
-#pollutionTrackerModal .close {
-  position: absolute;
-  right: 8px;
-  top: 6px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  color: #b8c5d6;
-}
-
-/* Responsive: full-width on very small screens */
-@media (max-width: 420px) {
-  #pollutionTrackerModal {
-    left: 8px !important;
-    right: 8px !important;
-    width: calc(100% - 16px);
-    max-width: none;
-  }
 }
 
 /* Responsive Design */
