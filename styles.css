@@ -498,6 +498,10 @@ body {
 
 /* Tracker modal popover background using variables */
 #pollutionTrackerModal {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
     background: transparent;
 }
 #pollutionTrackerModal .tracker-container {
@@ -514,6 +518,20 @@ footer {
     padding: 2rem 0;
     text-align: center;
     color: var(--muted-text);
+}
+
+/* Light theme specific overrides to improve contrast */
+.light-theme .nav-links a {
+    color: #ffffff !important;
+}
+
+.light-theme .logo {
+    color: #ffffff;
+    text-shadow: none;
+}
+
+.light-theme .btn {
+    color: var(--btn-text-dark);
 }
 
 /* Responsive Design */
